@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Priya Live</string>
+    <string name="google_app_id" translatable="false">1:887413155649:android:c4b9d7e2f1a083652e79fa</string>
+    <string name="gcm_defaultSenderId" translatable="false">887413155649</string>
+    <string name="default_web_client_id" translatable="false">887413155649-priyalive.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://priya-live-f9fa2-default-rtdb.firebaseio.com</string>
+    <string name="project_id" translatable="false">priya-live-f9fa2</string>
+</resources>

@@ -1,0 +1,75 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid",
+        ".validate": "newData.hasChildren(['userId', 'createdAt'])",
+        "userId": {
+          ".validate": "newData.isString() && (!data.exists() || data.val() == newData.val())"
+        },
+        "coinBalance": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        }
+      }
+    },
+    "user_ids": {
+      ".read": "auth != null",
+      "$userId": {
+        ".write": "auth != null && !data.exists()"
+      }
+    },
+    "rooms": {
+      ".read": "auth != null",
+      "$roomId": {
+        ".write": "auth != null && (!data.exists() || data.child('hostUid').val() == auth.uid || newData.child('hostUid').val() == auth.uid)",
+        "messages": {
+          ".read": "auth != null",
+          "$msgId": {
+            ".write": "auth != null && newData.child('senderUid').val() == auth.uid"
+          }
+        },
+        "participants": {
+          ".read": "auth != null",
+          "$uid": {
+            ".write": "auth != null && (auth.uid == $uid || root.child('rooms').child($roomId).child('hostUid').val() == auth.uid)"
+          }
+        }
+      }
+    },
+    "party_rooms": {
+      ".read": "auth != null",
+      "$roomId": {
+        ".write": "auth != null && (!data.exists() || data.child('hostUid').val() == auth.uid || newData.child('hostUid').val() == auth.uid)",
+        "seats": {
+          ".read": "auth != null",
+          "$seatId": {
+            ".write": "auth != null"
+          }
+        },
+        "messages": {
+          ".read": "auth != null",
+          "$msgId": {
+            ".write": "auth != null && newData.child('senderUid').val() == auth.uid"
+          }
+        },
+        "music": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "gifts": {
+          ".read": "auth != null",
+          "$giftId": {
+            ".write": "auth != null"
+          }
+        },
+        "participants": {
+          ".read": "auth != null",
+          "$uid": {
+            ".write": "auth != null && (auth.uid == $uid || root.child('party_rooms').child($roomId).child('hostUid').val() == auth.uid)"
+          }
+        }
+      }
+    }
+  }
+}
